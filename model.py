@@ -49,6 +49,41 @@ class Rating(Base):
     user = relationship("User",
             backref=backref("ratings", order_by=id))
 
+def new_user(email, password, age, zipcode):
+    # check if email already in database
+    # if so, return "that email is already in our system"
+    # if not, make new user
+    # return true
+    user_object = s.query(User).filter_by(email=email).all()
+    if user_object != []:
+        print "That email has already been registered."
+        return "That email has already been registered."
+    # add object to session
+    new_user = User(
+                    email=email,
+                    password=password,
+                    age=int(age), 
+                    zipcode=zipcode)
+    
+    s.add(new_user)
+    s.commit()
+    print "Email successfully registered!"
+    return "Email successfully registered!"
+
+def authenticate(email, password):
+    # session.query(model.Movie).filter_by(title = "Aladdin").first()
+
+    user_object = s.query(User).filter_by(email=email).first()
+
+    if user_object:
+        correct_password = user_object.password
+
+        if hash(password) == int(correct_password):
+            print user_object.email, user_object.id
+            return (user_object.email, user_object.id)
+    else: 
+        return None
+
 
 ### End class declarations
 ## code is now outside this function in first lines. 
