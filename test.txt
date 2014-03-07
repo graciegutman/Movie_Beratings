@@ -1,0 +1,6 @@
+18|35|F|other|37212
+19|40|M|librarian|02138
+20|42|F|homemaker|95660
+21|26|M|writer|30068
+22|25|M|writer|40206
+23|30|F|artist|48197
