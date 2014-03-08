@@ -6,10 +6,8 @@ app.secret_key = "whytheactualfuckdoweneedthis"
 
 @app.route("/")
 def index():
-    user_list = model.s.query(model.User).limit(10).all()
-    html = render_template("index.html", user_list=user_list)
+    html = render_template("index.html")
     return html
-
 
 @app.route("/", methods=["POST"])
 def process_login():
@@ -42,7 +40,6 @@ def create_account():
 
 @app.route("/create_account", methods=["POST"])
 def process_create_account():
-    
     password = request.form.get("password")
     password_verify = request.form.get("password_verify")
 
@@ -62,6 +59,16 @@ def process_create_account():
     else:
         flash("Passwords do not match.")
         return redirect(url_for('create_account'))
+
+@app.route("/all_users")
+def all_users():
+    user_list = model.s.query(model.User).limit(10).all()
+    return render_template("user_list.html", user_list=user_list)
+
+@app.route("/ratings/<user_id>")
+def ratings(user_id):
+    rating_list = model.s.query(model.Rating).limit(10).all()
+    return render_template("rating_list.html", rating_list=rating_list)
 
 
 # clear session
