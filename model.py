@@ -70,6 +70,21 @@ def new_user(email, password, age, zipcode):
     print "Email successfully registered!"
     return "Email successfully registered!"
 
+def update_rating(movie_rating_object, rating):
+    movie_rating_object.rating = rating
+    s.commit()
+    return "Rating successfully updated."
+
+def new_rating(movie_id, user_id, rating):
+    new_rating = Rating(
+                    movie_id=movie_id,
+                    user_id=user_id,
+                    rating=rating
+                    )
+    s.add(new_rating)
+    s.commit()
+    return "New movie rating added."
+    
 def authenticate(email, password):
     # session.query(model.Movie).filter_by(title = "Aladdin").first()
 
