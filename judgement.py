@@ -95,12 +95,14 @@ def movie_rating_update(movie_id):
     if movie_rating_object:
         # updates database and returns a string
         msg = model.update_rating(movie_rating_object, rating)
-        return msg
+        flash(msg)
+        return redirect(url_for('movie', movie_id=movie_id))
     # else create new object for database
     else: 
         # updates database with new rating and returns a string
         msg = model.new_rating(movie_id, user_id, rating)
-        return msg
+        flash(msg)
+        return redirect(url_for('movie', movie_id=movie_id))
 
 
 

@@ -1,5 +1,6 @@
-<html>
-{% for user in user_list %}
-    <h2><a href='/ratings/{{user.id}}'>User {{user.id}}</a>, email {{user.email}}, age {{user.age}} has {{user.ratings | length}} ratings</h2>
-{% endfor %}
-</html>
+{% extends 'master.html' %}
+    {% block body %}
+    {% for user in user_list %}
+        <h2><a href='/ratings/{{user.id}}'>User {{user.id}}</a>, email {{user.email}}, age {{user.age}} has {{user.ratings | length}} ratings</h2>
+    {% endfor %}
+    {% endblock %}

@@ -1,7 +1,8 @@
-<html>
+{% extends 'master.html' %}
+    {% block body %}
     <h1>Ratings for {{rating_list[0].movies[0].name}}</h1>
     {% for rating in rating_list %}
         <h3>Rating {{rating.rating}} by User {{rating.user_id}}</h3>
         <br/>
     {% endfor %}
-</html>
+    {% endblock %}

@@ -1,9 +1,10 @@
-<html>
-<h1>User {{rating_list[0].user_id}}'s Ratings</h1>
-{% for rating in rating_list %}
-    <h2>{{rating.movies[0].name}}</h2>
-    <h3>Rating {{rating.rating}}</h3>
-    <br/>
-    <br/>
-{% endfor %}
-</html>
+{% extends 'master.html' %}
+    {% block body %}
+    <h1>User {{rating_list[0].user_id}}'s Ratings</h1>
+    {% for rating in rating_list %}
+        <h2>{{rating.movies[0].name}}</h2>
+        <h3>Rating {{rating.rating}}</h3>
+        <br/>
+        <br/>
+    {% endfor %}
+    {% endblock %}

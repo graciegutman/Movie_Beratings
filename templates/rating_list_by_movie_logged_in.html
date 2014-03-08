@@ -1,4 +1,5 @@
-<html>
+{% extends 'master.html' %}
+    {% block body %}
     <form class="rating" method = "POST">
         <h2 class="rating-heading">Add or update your movie rating.</h2>
 
@@ -12,4 +13,4 @@
         <h3>Rating {{rating.rating}} by User {{rating.user_id}}</h3>
         <br/>
     {% endfor %}
-</html>
+    {% endblock %}
