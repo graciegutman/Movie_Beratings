@@ -67,9 +67,8 @@ def all_users():
 
 @app.route("/ratings/<user_id>")
 def ratings(user_id):
-    rating_list = model.s.query(model.Rating).limit(10).all()
+    rating_list = model.s.query(model.Rating).filter_by(user_id=user_id).limit(10).all()
     return render_template("rating_list.html", rating_list=rating_list)
-
 
 # clear session
 @app.route("/logout")
