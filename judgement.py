@@ -99,6 +99,28 @@ def movie(movie_id):
         # only makes prediction if there is no existing rating from user
         if not user_rating:
             prediction = user.predict_rating(movie)
+            effective_rating = prediction
+        else:
+            effective_rating = user_rating.rating
+
+        the_eye = model.s.query(model.User).filter_by(email="eye@aol.com").one()
+        eye_rating = model.s.query(model.Rating).filter_by(user_id=the_eye.id, 
+                                                    movie_id=movie.id).first()
+        if not eye_rating:
+            eye_rating = the_eye.predict_rating(movie)
+        else:
+            eye_rating = eye_rating.rating
+
+        if not eye_rating:
+            beratement = "There is insufficient data for me to berate you."
+        else: 
+            difference = abs(eye_rating - effective_rating)
+            messages = [ "I suppose you don't have bad taste after all.",
+                "I regret every decision that I've ever made that has brought me to listen to your opinion.",
+                "Words fail me, as your taste in movies has clearly failed you.",
+                "That movie is great. For a clown to watch. Idiot.",
+                "I don't even"]
+            beratement = messages[int(difference)]
         # end prediction
         # return render_template("movie.html", movie=movie, average=avg_rating, user_rating=user_rating, prediction=prediction)
         return render_template("rating_list_by_movie_logged_in.html",
@@ -106,7 +128,8 @@ def movie(movie_id):
                                 movie=movie, 
                                 average=avg_rating, 
                                 user_rating=user_rating, 
-                                prediction=prediction)
+                                prediction=prediction,
+                                beratement=beratement)
     else:
         return render_template("rating_list_by_movie.html", rating_list=rating_list)
 
