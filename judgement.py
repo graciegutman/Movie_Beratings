@@ -81,7 +81,32 @@ def ratings(user_id):
 def movie(movie_id):
     rating_list = model.s.query(model.Rating).filter_by(movie_id=movie_id).all()
     if session.get('user_id'):
-        return render_template("rating_list_by_movie_logged_in.html", rating_list=rating_list)
+        movie = model.s.query(model.Movie).get(movie_id)
+        rating_nums = []
+        user_rating = None
+
+        for r in rating_list:
+            # assign user_rating to logged in user's rating object
+            if r.user_id == session['user_id']:
+                user_rating = r
+            rating_nums.append(r.rating)
+        
+        avg_rating = float(sum(rating_nums)) / len(rating_nums)
+        # Prediction code: only predict if the user hasn't rated it.
+        user = model.s.query(model.User).get(session['user_id'])
+        prediction = None
+
+        # only makes prediction if there is no existing rating from user
+        if not user_rating:
+            prediction = user.predict_rating(movie)
+        # end prediction
+        # return render_template("movie.html", movie=movie, average=avg_rating, user_rating=user_rating, prediction=prediction)
+        return render_template("rating_list_by_movie_logged_in.html",
+                                rating_list=rating_list, 
+                                movie=movie, 
+                                average=avg_rating, 
+                                user_rating=user_rating, 
+                                prediction=prediction)
     else:
         return render_template("rating_list_by_movie.html", rating_list=rating_list)
 

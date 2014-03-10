@@ -7,6 +7,9 @@
         <input type="submit" class="btn btn-lg btn-primary btn-block" value="Submit">
     </form>
 
+    {% if prediction %}
+        <h3>We predict you will rate this movie {{prediction}}.</h3>
+    {% endif %}
 
     <h1>Ratings for {{rating_list[0].movies[0].name}}</h1>
     {% for rating in rating_list %}
